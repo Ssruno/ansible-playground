@@ -9,3 +9,9 @@ echo "parse_git_branch() {
 }
 PS1='\033[1;33m(\t)\033[m \033[1;36m[ \u@\h |\033[m \033[1;32m\W\033[m \033[1;36m]\033[m $(parse_git_branch)\n> '
 " | tee -a /root/.bashrc /home/vagrant/.bashrc
+
+
+
+yum install -y epel-release && yum -y update
+
+yum install -y ansible

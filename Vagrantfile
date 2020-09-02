@@ -9,13 +9,13 @@ Vagrant.configure("2") do |config|
   # =====================================
   # Ansible Controller
   # =====================================  
-  config.vm.define "controller" do |router|
+  config.vm.define "controller" do |controller|
     # router.vm.box = "centos-ansible"
-    controller.vm.box = "centos/7"
+    controller.vm.box = "centos-ansible"
     controller.vm.hostname = "ansible-controller"
     
     # We deactive the vbguest check-up plugin, because the base image already has the corresponding version
-    # controller.vbguest.auto_update = false
+    controller.vbguest.auto_update = false
    
     controller.vm.provider "virtualbox" do |v|
 
@@ -31,7 +31,7 @@ Vagrant.configure("2") do |config|
       v.name = "ansible-controller"
     end        
     # Install some dependencies, and define the NAT
-    router.vm.provision :shell, privileged: true, path: "prompt.sh"
+    controller.vm.provision :shell, privileged: true, path: "prompt.sh"
     controller.vm.post_up_message = "(ansible-controller) Ansible Controller -- IS UP AND READY !!!"
   end
 
@@ -42,12 +42,12 @@ Vagrant.configure("2") do |config|
   # --------------
   # Target 1
   # --------------
-  config.vm.define "target1" do |lighthouse1|
+  config.vm.define "target1" do |target1|
     # target1.vm.box = "centos-ansible"
-    target1.vm.box = "centos/7"
+    target1.vm.box = "centos-ansible"
     target1.vm.hostname = "target1"
     # We deactive the vbguest check-up plugin, because the base image already has the corresponding version
-    # target1.vbguest.auto_update = false    
+    target1.vbguest.auto_update = false    
     # Interface 
     # target1.vm.network "private_network", ip: "172.20.1.100", netmask: "255.255.0.0", virtualbox__intnet: true
     target1.vm.provider "virtualbox" do |v|
@@ -71,12 +71,12 @@ Vagrant.configure("2") do |config|
   # --------------
   # Target 2
   # --------------
-  config.vm.define "target2" do |lighthouse1|
+  config.vm.define "target2" do |target2|
     # target1.vm.box = "centos-ansible"
-    target2.vm.box = "centos/7"
+    target2.vm.box = "centos-ansible"
     target2.vm.hostname = "target2"
     # We deactive the vbguest check-up plugin, because the base image already has the corresponding version
-    # target2.vbguest.auto_update = false    
+    target2.vbguest.auto_update = false    
     # Interface 
     # target1.vm.network "private_network", ip: "172.20.1.100", netmask: "255.255.0.0", virtualbox__intnet: true
     target2.vm.provider "virtualbox" do |v|
@@ -84,7 +84,7 @@ Vagrant.configure("2") do |config|
       # This deals with the default vagrant interface, we force to use the address 192.168 instead 
       # of the 10.0 and we force the MAC address. Otherwise all vms has the same internal address
     #   v.customize ['modifyvm', :id, '--natnet1', '192.168.117.0/24']
-      v.customize ['modifyvm', :id, '--macaddress1', "5CA1AB1E0047"]
+      v.customize ['modifyvm', :id, '--macaddress1', "5CA1AB1E0048"]
       # Performance
     #   v.customize ["modifyvm", :id, "--cpuexecutioncap", "50"]
       v.memory = 512
